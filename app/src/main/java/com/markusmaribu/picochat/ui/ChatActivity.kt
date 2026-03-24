@@ -82,6 +82,7 @@ class ChatActivity : AppCompatActivity() {
     private var wakeLock: PowerManager.WakeLock? = null
     private val handler = Handler(Looper.getMainLooper())
     private var viewsSwapped = false
+    private var forceSingleScreen = false
     private var landscapeSwapped = false
     private var layoutGeneration = 0
     private lateinit var soundManager: SoundManager
@@ -246,6 +247,7 @@ class ChatActivity : AppCompatActivity() {
         isOnline = intent.getBooleanExtra(Constants.EXTRA_IS_ONLINE, false)
         val prefs = getSharedPreferences("picochat_prefs", MODE_PRIVATE)
         viewsSwapped = prefs.getBoolean("views_swapped", false)
+        forceSingleScreen = prefs.getBoolean("force_single_screen", false)
         if (prefs.getBoolean("rotation_locked", false)) {
             requestedOrientation = prefs.getInt(
                 "locked_orientation", ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
@@ -1095,6 +1097,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun checkSecondaryDisplay() {
+        if (forceSingleScreen) return
         val dm = displayManager ?: return
         val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
 

@@ -59,6 +59,7 @@ class RoomSelectionPresentation(
     lateinit var displaySetupContent: View private set
     lateinit var btnSwapViews: View       private set
     lateinit var btnLockRotation: View   private set
+    lateinit var btnForceSingleScreen: View private set
     lateinit var cornerHighlightDisplaySetup: View private set
     lateinit var btnDisplaySetupBack: View private set
     lateinit var btnExportChat: View          private set
@@ -150,6 +151,7 @@ class RoomSelectionPresentation(
         displaySetupContent = view.findViewById(R.id.displaySetupContent)
         btnSwapViews       = view.findViewById(R.id.btnSwapViews)
         btnLockRotation    = view.findViewById(R.id.btnLockRotation)
+        btnForceSingleScreen = view.findViewById(R.id.btnForceSingleScreen)
         cornerHighlightDisplaySetup = view.findViewById(R.id.cornerHighlightDisplaySetup)
         btnDisplaySetupBack = view.findViewById(R.id.btnDisplaySetupBack)
         btnExportChat      = view.findViewById(R.id.btnExportChat)

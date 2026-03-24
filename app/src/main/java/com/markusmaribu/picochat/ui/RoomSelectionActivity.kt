@@ -95,6 +95,7 @@ class RoomSelectionActivity : AppCompatActivity() {
 
     private var bleScanner: BleScanner? = null
     private var viewsSwapped = false
+    private var forceSingleScreen = false
     private var rotationLocked = false
     private var activeMenuScreen: String = "room_selection"
     private var colorDraft: Int = -1
@@ -147,6 +148,7 @@ class RoomSelectionActivity : AppCompatActivity() {
         val displaySetupContent: View,
         val btnSwapViews: View,
         val btnLockRotation: View,
+        val btnForceSingleScreen: View,
         val displaySetupButtons: List<View>,
         val cornerHighlightDisplaySetup: View,
         val btnDisplaySetupBack: View,
@@ -191,8 +193,8 @@ class RoomSelectionActivity : AppCompatActivity() {
             listOf(binding.btnName, binding.btnColor, binding.btnDisplaySetup, binding.btnExportChat),
             binding.cornerHighlightOptions,
             binding.displaySetupContent,
-            binding.btnSwapViews, binding.btnLockRotation,
-            listOf(binding.btnSwapViews, binding.btnLockRotation),
+            binding.btnSwapViews, binding.btnLockRotation, binding.btnForceSingleScreen,
+            listOf(binding.btnSwapViews, binding.btnLockRotation, binding.btnForceSingleScreen),
             binding.cornerHighlightDisplaySetup,
             binding.btnDisplaySetupBack,
             binding.btnExportChat, binding.exportChatContent,
@@ -225,8 +227,8 @@ class RoomSelectionActivity : AppCompatActivity() {
             listOf(p.btnName, p.btnColor, p.btnDisplaySetup, p.btnExportChat),
             p.cornerHighlightOptions,
             p.displaySetupContent,
-            p.btnSwapViews, p.btnLockRotation,
-            listOf(p.btnSwapViews, p.btnLockRotation),
+            p.btnSwapViews, p.btnLockRotation, p.btnForceSingleScreen,
+            listOf(p.btnSwapViews, p.btnLockRotation, p.btnForceSingleScreen),
             p.cornerHighlightDisplaySetup,
             p.btnDisplaySetupBack,
             p.btnExportChat, p.exportChatContent,
@@ -365,6 +367,7 @@ class RoomSelectionActivity : AppCompatActivity() {
         }
         username = prefs.getString("username", username) ?: username
         viewsSwapped = prefs.getBoolean("views_swapped", false)
+        forceSingleScreen = prefs.getBoolean("force_single_screen", false)
         rotationLocked = prefs.getBoolean("rotation_locked", false)
         exportedHashes = prefs.getStringSet("exported_hashes", emptySet())
             ?.mapNotNull { it.toIntOrNull() }?.toMutableSet() ?: mutableSetOf()
@@ -676,6 +679,21 @@ class RoomSelectionActivity : AppCompatActivity() {
             (v.btnLockRotation as TextView).text = getString(
                 if (rotationLocked) R.string.btn_unlock_rotation else R.string.btn_lock_rotation
             )
+        }
+        (v.btnForceSingleScreen as TextView).text =
+            if (forceSingleScreen) "Force Single Screen: ON" else "Force Single Screen: OFF"
+        v.btnForceSingleScreen.setOnClickListener {
+            soundManager.play(SoundManager.Sound.SELECT)
+            forceSingleScreen = !forceSingleScreen
+            getSharedPreferences("picochat_prefs", MODE_PRIVATE).edit()
+                .putBoolean("force_single_screen", forceSingleScreen).apply()
+            (v.btnForceSingleScreen as TextView).text =
+                if (forceSingleScreen) "Force Single Screen: ON" else "Force Single Screen: OFF"
+            if (forceSingleScreen && isSecondaryDisplayActive) {
+                onSecondaryDisplayDisconnected()
+            } else if (!forceSingleScreen) {
+                checkSecondaryDisplay()
+            }
         }
         v.btnDisplaySetupBack.setOnClickListener {
             soundManager.play(SoundManager.Sound.SELECT)
@@ -1131,6 +1149,7 @@ class RoomSelectionActivity : AppCompatActivity() {
     }
 
     private fun checkSecondaryDisplay() {
+        if (forceSingleScreen) return
         val dm = displayManager ?: return
         val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
 

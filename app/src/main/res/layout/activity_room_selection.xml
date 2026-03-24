@@ -920,6 +920,19 @@
                         android:textColor="@color/ds_black"
                         android:textSize="@dimen/ds_body_text_size" />
 
+                        <TextView
+                        android:id="@+id/btnForceSingleScreen"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_quit_button"
+                        android:fontFamily="@font/cozette_vector"
+                        android:gravity="center"
+                        android:text="Force Single Screen: OFF"
+                        android:textColor="@color/ds_black"
+                        android:textSize="@dimen/ds_body_text_size" />
+
                 </LinearLayout>
 
                 <View
