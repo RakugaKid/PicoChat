@@ -35,12 +35,12 @@ class PictoCanvasView @JvmOverloads constructor(
     }
 
     var tool: Tool = Tool.PENCIL
-    var rainbowMode: Boolean = false
-    private var rainbowHue: Float = 0f
         set(value) {
             field = value
             onToolChanged?.invoke(value)
         }
+    var rainbowMode: Boolean = false
+    private var rainbowHue: Float = 0f
 
     var onToolChanged: ((Tool) -> Unit)? = null
 
