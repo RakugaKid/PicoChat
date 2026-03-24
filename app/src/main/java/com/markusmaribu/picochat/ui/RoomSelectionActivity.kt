@@ -1142,14 +1142,11 @@ class RoomSelectionActivity : AppCompatActivity() {
     // =====================================================================
 
     private fun setupDisplayManager() {
-        displayManager = (getSystemService(DISPLAY_SERVICE) as DisplayManager).also {
-            it.registerDisplayListener(displayListener, handler)
-        }
-        checkSecondaryDisplay()
+        // Dual-screen support removed — always single-screen mode
     }
 
     private fun checkSecondaryDisplay() {
-        if (forceSingleScreen) return
+        return // Disabled — single-screen only
         val dm = displayManager ?: return
         val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
 
