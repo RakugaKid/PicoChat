@@ -301,6 +301,17 @@
                 android:padding="6dp"
                 android:src="@drawable/ic_pen_thin" />
 
+            <ImageView
+                android:id="@+id/btnRainbow"
+                android:layout_width="23dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_tool_button"
+                android:contentDescription="Rainbow pen"
+                android:padding="4dp"
+                android:src="@drawable/ic_rainbow" />
+
             <View
                 android:layout_width="20dp"
                 android:layout_height="3dp"

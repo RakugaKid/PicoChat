@@ -37,6 +37,7 @@ class CanvasPresentation(
     lateinit var btnEraser: View                    private set
     lateinit var btnPenThick: View                  private set
     lateinit var btnPenThin: View                   private set
+    lateinit var btnRainbow: View                   private set
     lateinit var btnScrollUp: View                  private set
     lateinit var btnScrollDown: View                private set
     lateinit var btnKbLatin: View                   private set
@@ -92,6 +93,7 @@ class CanvasPresentation(
         btnEraser     = view.findViewById(R.id.btnEraser)
         btnPenThick   = view.findViewById(R.id.btnPenThick)
         btnPenThin    = view.findViewById(R.id.btnPenThin)
+        btnRainbow    = view.findViewById(R.id.btnRainbow)
         btnScrollUp   = view.findViewById(R.id.btnScrollUp)
         btnScrollDown = view.findViewById(R.id.btnScrollDown)
         btnKbLatin    = view.findViewById(R.id.btnKbLatin)

@@ -117,6 +117,7 @@ class ChatActivity : AppCompatActivity() {
         val btnEraser: View,
         val btnPenThick: View,
         val btnPenThin: View,
+        val btnRainbow: View,
         val btnScrollUp: View,
         val btnScrollDown: View,
         val btnKbLatin: View,
@@ -141,6 +142,7 @@ class ChatActivity : AppCompatActivity() {
         btnEraser    = binding.btnEraser,
         btnPenThick  = binding.btnPenThick,
         btnPenThin   = binding.btnPenThin,
+        btnRainbow   = binding.btnRainbow,
         btnScrollUp  = binding.btnScrollUp,
         btnScrollDown = binding.btnScrollDown,
         btnKbLatin   = binding.btnKbLatin,
@@ -163,6 +165,7 @@ class ChatActivity : AppCompatActivity() {
         btnEraser    = p.btnEraser,
         btnPenThick  = p.btnPenThick,
         btnPenThin   = p.btnPenThin,
+        btnRainbow   = p.btnRainbow,
         btnScrollUp  = p.btnScrollUp,
         btnScrollDown = p.btnScrollDown,
         btnKbLatin   = p.btnKbLatin,
@@ -444,6 +447,11 @@ class ChatActivity : AppCompatActivity() {
         v.btnPenThin.setOnClickListener {
             v.canvas.penSize = 1
             soundManager.play(SoundManager.Sound.SMALL_BRUSH)
+        }
+        v.btnRainbow.setOnClickListener {
+            v.canvas.rainbowMode = !v.canvas.rainbowMode
+            v.btnRainbow.isSelected = v.canvas.rainbowMode
+            soundManager.play(SoundManager.Sound.SELECT)
         }
 
         v.btnScrollUp.setOnClickListener { scrollChatUp() }
@@ -934,7 +942,7 @@ class ChatActivity : AppCompatActivity() {
         bv.usernameLabel.setTextColor(color)
 
         val toolButtons = listOf(
-            bv.btnPencil, bv.btnEraser, bv.btnPenThick, bv.btnPenThin,
+            bv.btnPencil, bv.btnEraser, bv.btnPenThick, bv.btnPenThin, bv.btnRainbow,
             bv.btnKbLatin, bv.btnKbAccented, bv.btnKbKatakana, bv.btnKbSymbols, bv.btnKbEmoji
         )
         for (btn in toolButtons) {

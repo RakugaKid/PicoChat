@@ -35,6 +35,8 @@ class PictoCanvasView @JvmOverloads constructor(
     }
 
     var tool: Tool = Tool.PENCIL
+    var rainbowMode: Boolean = false
+    private var rainbowHue: Float = 0f
         set(value) {
             field = value
             onToolChanged?.invoke(value)
@@ -331,11 +333,18 @@ class PictoCanvasView @JvmOverloads constructor(
     private fun applyTool(x: Int, y: Int) {
         when (tool) {
             Tool.PENCIL -> {
+                val penColor = if (rainbowMode) {
+                    val c = Color.HSVToColor(floatArrayOf(rainbowHue, 1f, 1f))
+                    rainbowHue = (rainbowHue + 2f) % 360f
+                    c
+                } else {
+                    Color.BLACK
+                }
                 val half = penSize / 2
                 for (py in (y - half)..(y + half)) {
                     for (px in (x - half)..(x + half)) {
                         if (px in 0 until Constants.CANVAS_W && py in 0 until Constants.CANVAS_H) {
-                            canvasBitmap.setPixel(px, py, Color.BLACK)
+                            canvasBitmap.setPixel(px, py, penColor)
                         }
                     }
                 }
