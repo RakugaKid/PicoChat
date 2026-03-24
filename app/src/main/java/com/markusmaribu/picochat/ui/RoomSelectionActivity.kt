@@ -1132,7 +1132,7 @@ class RoomSelectionActivity : AppCompatActivity() {
 
     private fun checkSecondaryDisplay() {
         val dm = displayManager ?: return
-        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY }
+        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
 
         if (secondary != null && !isSecondaryDisplayActive) {
             onSecondaryDisplayConnected(secondary)
@@ -1199,7 +1199,7 @@ class RoomSelectionActivity : AppCompatActivity() {
 
     private fun reconnectSecondaryDisplay() {
         val dm = displayManager ?: return
-        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY }
+        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
 
         val oldRoomPres = roomPresentation
         val oldChatPres = chatHistoryPresentation

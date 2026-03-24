@@ -1096,7 +1096,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun checkSecondaryDisplay() {
         val dm = displayManager ?: return
-        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY }
+        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
 
         if (secondary != null && !isSecondaryDisplayActive) {
             onSecondaryDisplayConnected(secondary)
@@ -1164,7 +1164,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun reconnectSecondaryDisplay() {
         val dm = displayManager ?: return
-        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY }
+        val secondary = dm.displays.firstOrNull { it.displayId != Display.DEFAULT_DISPLAY && (it.flags and Display.FLAG_PRESENTATION) != 0 }
         val canvasBits = if (bv.canvas.hasDrawing()) bv.canvas.exportBits() else null
 
         val oldCanvasPres = canvasPresentation
